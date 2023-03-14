@@ -15,6 +15,7 @@ private:
     int m_N;                                            // number of time steps
     double m_y0;                                        // initial datum
     double m_yn;                                        // current solution
+    std::array<std::vector<double>, 2> result;
 public:
     ThetaMethod(  // constructor
         const std::function<double(double, double)> &f,         // function f
@@ -43,7 +44,7 @@ public:
         for (int i = 1; i <= m_N; i++){
             double tnn {m_tn + m_tf/m_N};           // tnn := t(n+1)
             auto F = [&](double x){                 // by reference (catch 'em all! -cit.) 
-                return x - m_tf/m_N*( theta*m_f(tnn,x) + (1 - theta)*m_f(m_tn,m_yn) );
+                return x - m_tf/m_N*( theta*m_f(tnn,x) + (1 - theta)*m_f(m_tn,m_yn) ) - m_yn;
             };
             auto dF = [&](double x){                // by reference (catch 'em all! -cit. ) 
                 return 1 - m_tf/m_N*( theta*m_dfdx(tnn,x) );
@@ -53,10 +54,10 @@ public:
             const double toll_incr = 1e-8;
             const unsigned int max_iter = 100;
             NewtonSolver Nsolver(F, dF, toll_res, toll_incr, max_iter);
-            Nsolver.solve(m_yn);                        // as first guess i choose the previous m_yn
+            Nsolver.solve(0.3);                        // as first guess i choose the previous m_yn
                                                         // m_yn will be updated with the new value --> m_yn+1
             result.at(1).emplace_back(Nsolver.get_result());
-            m_tn = tnn;                                 // I update current time step
+            m_tn = tnn;                                 // I update the current time step
             result.at(0).emplace_back(m_tn);
         }
         return result;
