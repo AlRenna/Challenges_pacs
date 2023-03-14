@@ -23,7 +23,7 @@ main: main.o # CrankNicolson.o
 # %.o: main.cpp CrankNicolson.cpp #CrankNicolson.hpp
 
 main.o: main.cpp CrankNicolson.cpp #CrankNicolson.hpp
-	# $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $<  
+# $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $<  
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) main.cpp
 
 
