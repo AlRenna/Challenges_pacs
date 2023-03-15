@@ -42,7 +42,7 @@ public:
         m_tn = m_t0;
         // COMPUTE y(n+1) FOR EACH TIME STEP (x is the new y(n+1) ;) )
         for (int i = 1; i <= m_N; i++){
-            double tnn {m_tn + m_tf/m_N};           // tnn := t(n+1)
+            double tnn {m_tn + m_tf/m_N};           // tnn := t(n+1) = t(n) + dt
             auto F = [&](double x){                 // by reference (catch 'em all! -cit.) 
                 return x - m_tf/m_N*( theta*m_f(tnn,x) + (1 - theta)*m_f(m_tn,m_yn) ) - m_yn;
             };
@@ -54,9 +54,10 @@ public:
             const double toll_incr = 1e-8;
             const unsigned int max_iter = 100;
             NewtonSolver Nsolver(F, dF, toll_res, toll_incr, max_iter);
-            Nsolver.solve(0.3);                        // as first guess i choose the previous m_yn
+            Nsolver.solve(m_yn);                        // as first guess i choose the previous m_yn
                                                         // m_yn will be updated with the new value --> m_yn+1
-            result.at(1).emplace_back(Nsolver.get_result());
+            m_yn = Nsolver.get_result();
+            result.at(1).emplace_back(m_yn);
             m_tn = tnn;                                 // I update the current time step
             result.at(0).emplace_back(m_tn);
         }
