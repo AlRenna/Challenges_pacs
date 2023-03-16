@@ -11,7 +11,7 @@ OBJS = $(SRCS:.cpp=.o)
 HEADERS = $(wildcard *.hpp)
 
 
-exe_sources = $(filter main%.cpp,$(SRCS))
+exe_sources = $(filter theta%.cpp,$(SRCS))
 EXEC = $(exe_sources:.cpp=)
 
 
@@ -26,7 +26,7 @@ all: $(EXEC)
 
 $(EXEC): $(OBJS)
 	#$(CXX) $(LDFLAGS) $(CXXFLAGS) $< -o main $(LDLIBS)
-	$(CXX)  $(CXXFLAGS) $(OBJS) -o main 
+	$(CXX)  $(CXXFLAGS) $(OBJS) -o theta 
 
 # %.o: main.cpp CrankNicolson.cpp #CrankNicolson.hpp
 
@@ -40,3 +40,4 @@ clean:
 
 distclean: clean
 	$(RM) *~
+	$(RM) theta
