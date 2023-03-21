@@ -20,7 +20,7 @@ public:
     ThetaMethod(  // constructor
         const std::function<double(double, double)> &f,         // function f
         const std::function<double(double, double)> &dfdx,      // dfdx
-        double t0,                                      // initial time step, // SET DEFAULT 0!!!!!!!!!
+        double t0,                                      // initial time step
         double tf,                                      // final time step
         int N,                                          // number of steps
         double y0                                       // initial datum
