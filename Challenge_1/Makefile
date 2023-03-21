@@ -1,7 +1,6 @@
 CXX      ?= g++
 CXXFLAGS ?= -std=c++20
-CPPFLAGS ?= -O3 -Wall -I.  #-I./include #TODO: DA RIVEDERE I PATH
-
+CPPFLAGS ?= -O3 -Wall -I.  
 LDFLAGS ?= 
 LDLIBS  ?= 
 
@@ -11,12 +10,9 @@ OBJS = $(SRCS:.cpp=.o)
 HEADERS = $(wildcard *.hpp)
 
 
-exe_sources = $(filter theta%.cpp,$(SRCS))
+exe_sources = $(filter main%.cpp,$(SRCS))
 EXEC = $(exe_sources:.cpp=)
 
-
-CNHPP ?= CrankNicolson.hpp
-CNCPP ?= CrankNicolson.cpp
 
 .PHONY = all clean distclean
 
@@ -26,7 +22,7 @@ all: $(EXEC)
 
 $(EXEC): $(OBJS)
 	#$(CXX) $(LDFLAGS) $(CXXFLAGS) $< -o main $(LDLIBS)
-	$(CXX)  $(CXXFLAGS) $(OBJS) -o theta 
+	$(CXX)  $(CXXFLAGS) $(OBJS) -o main 
 
 # %.o: main.cpp CrankNicolson.cpp #CrankNicolson.hpp
 
@@ -40,4 +36,4 @@ clean:
 
 distclean: clean
 	$(RM) *~
-	$(RM) theta
+	$(RM) main
