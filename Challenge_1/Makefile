@@ -30,7 +30,7 @@ $(OBJS): $(SRCS) $(HEADERS)
 
 
 clean:
-	$(RM) *.o
+	$(RM) *.o *.txt *.png 
 
 distclean: clean
 	$(RM) *~

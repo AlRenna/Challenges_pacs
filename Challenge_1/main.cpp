@@ -14,11 +14,11 @@ int main(){
     // };
 
     auto f = [&](double t, double y){       // f is a function that takes two double t, y and returns a double
-        return 1/(1+t*t) - 2*y*y;    
+        return -t*exp(-y);    
         // return [](double t, std::function<double(double)> y){return -t*exp(-y(t));};    // return a f(t,y(t)) --> double
     };
     auto dfdy = [&](double t, double y){
-        return - 4*y;
+        return t*exp(-y);
     };
 
     double t0 = 0, tf = 5, y0 = 0;
@@ -32,10 +32,10 @@ int main(){
         std::cerr << " File open error " << std::endl;
         return 1;           // exit the main
     } else {                // write to the output file
-        out_result << std::setw(10) << std::left << "n" << "ty(tn)" << std::endl;
-        out_result << "----------------------" << std::endl;
+        out_result << std::setw(10) << std::left << "t,y(t)\n";
+        //out_result << "----------------------" << std::endl;
         for(size_t i{0}; i < result.at(0).size(); i++){
-            out_result <<  std::setw(10) << std::left << result.at(0).at(i) << result.at(1).at(i) << std::endl;
+            out_result << result.at(0).at(i) << "," << result.at(1).at(i) << "\n";
         }
     }
     out_result.close();
