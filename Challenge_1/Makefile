@@ -24,11 +24,9 @@ $(EXEC): $(OBJS)
 	#$(CXX) $(LDFLAGS) $(CXXFLAGS) $< -o main $(LDLIBS)
 	$(CXX)  $(CXXFLAGS) $(OBJS) -o main 
 
-# %.o: main.cpp CrankNicolson.cpp #CrankNicolson.hpp
 
 $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(SRCS)
-	#$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) main.cpp
 
 
 clean:
