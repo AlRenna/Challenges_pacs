@@ -30,7 +30,7 @@ int main(int argc, char **argv){
     auto result = Tsolver.solve(theta);
     
     // OUTPUT TO TEXT FILE
-    std::fstream out_result{"./result.txt", std::ios::out};
+    std::fstream out_result{"./result_muparser.txt", std::ios::out};
     if (!out_result){
         std::cerr << " File open error " << std::endl;
         return 1;           // exit the main

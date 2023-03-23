@@ -10,11 +10,12 @@ OBJS = $(SRCS:.cpp=.o)
 HEADERS = $(wildcard *.hpp)
 
 
-exe_sources = $(filter main%.cpp,$(SRCS))
 EXEC = main
 
 # Flags for the muParser 
 ###############################################################
+SRCS_MUPARSER ?= main_muparser.cpp
+OBJS_MUPARSER = $(SRCS_MUPARSER:.cpp=.o)
 CPPFLAG_MUPARSER ?= -IExamples/include 
 EXEC_MUPARSER     = main_muparser
 LDFLAGS_MUPARSER ?= -LExamples/lib -Wl,-rpath=Examples/lib
@@ -30,11 +31,13 @@ all: $(EXEC) $(EXEC_MUPARSER)
 
 # MUPARSER
 ###############################################################
-$(EXEC_MUPARSER).o: %.o: %.cpp newton.hpp muparser_fun.hpp theta.hpp
-	$(CXX) -c $(CPPFLAGS) $(CPPFLAG_MUPARSER) $(CXXFLAGS) $<
 
-$(EXEC_MUPARSER): %: %.o
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(LDFLAGS_MUPARSER) $< $(LIBS) $(LIB_MUPARSER) -o $@
+
+$(EXEC_MUPARSER): $(OBJS_MUPARSER)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(LDFLAGS_MUPARSER) $(OBJS_MUPARSER) $(LIBS) $(LIB_MUPARSER) -o main_muparser
+
+$(OBJS_MUPARSER): $(SRCS_MUPARSER) $(HEADERS)
+	$(CXX) -c $(CPPFLAGS) $(CPPFLAG_MUPARSER) $(CXXFLAGS) $(SRCS_MUPARSER)
 ###############################################################
 
 $(EXEC): $(OBJS)

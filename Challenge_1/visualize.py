@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def plot_result():
-    df = pd.read_csv("result.txt")
+def plot_result(filename):
+    df = pd.read_csv(filename)
     plt.figure()
     plt.plot(df["t"], df["y_t"], label="Numerical Result")
     plt.ylabel("y(t)")
@@ -14,4 +14,5 @@ def plot_result():
 
 
 if __name__ == "__main__":
-    plot_result()
+    plot_result("result.txt")
+    plot_result("result_muparser.txt")
