@@ -24,7 +24,7 @@ int main(){
         std::cerr << " File open error " << std::endl;
         return 1;           // exit the main
     } else {                // write to the output file
-        out_result << std::setw(10) << std::left << "t,y(t)" << std::endl;
+        out_result << std::setw(10) << std::left << "t,y_t\n"; //Don't touch!!
         for(size_t i{0}; i < result.at(0).size(); i++){
             out_result << result.at(0).at(i) << "," << result.at(1).at(i) << "\n";
         }

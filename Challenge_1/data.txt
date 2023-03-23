@@ -1,9 +1,0 @@
-fun = -t*exp(-y)
-dfun = t*exp(-y)
-
-n_max_it = 100
-t0  = 0.0
-tf   = 1.0
-y0 = 0.0
-theta = 0.5
-
