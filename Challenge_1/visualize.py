@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def plot_result():
     df = pd.read_csv("result.txt")
     plt.figure()
-    plt.plot(df["t"], df["y(t)"], label="Numerical Result")
+    plt.plot(df["t"], df["y_t"], label="Numerical Result")
     plt.ylabel("y(t)")
     plt.xlabel("t")
     plt.legend()
