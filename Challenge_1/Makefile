@@ -49,7 +49,7 @@ $(OBJS): $(SRCS) $(HEADERS)
 
 
 clean:
-	$(RM) *.o *.png *.txt result.txt
+	$(RM) *.o *.png result.txt result_muparser.txt
 
 distclean: clean
 	$(RM) *~
