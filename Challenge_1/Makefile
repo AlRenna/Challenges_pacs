@@ -5,20 +5,38 @@ LDFLAGS ?=
 LDLIBS  ?= 
 
 
-SRCS = $(wildcard *.cpp)
+SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)
 HEADERS = $(wildcard *.hpp)
 
 
 exe_sources = $(filter main%.cpp,$(SRCS))
-EXEC = $(exe_sources:.cpp=)
+EXEC = main
+
+# Flags for the muParser example.
+CPPFLAG_MUPARSER ?= -I/home/jellyfish/shared-folder/Challenges_pacs/Examples/include  #TODO: change the path to ../../../Examples
+EXEC_MUPARSER     = main_muparser
+LDFLAGS_MUPARSER ?= -L/home/jellyfish/shared-folder/Challenges_pacs/Examples/lib \
+	-Wl,-rpath=/home/jellyfish/shared-folder/Challenges_pacs/Examples/lib
+LIB_MUPARSER     ?= -lmuparser
 
 
 .PHONY = all clean distclean
 
 .DEFAULT_GOAL = all
 
-all: $(EXEC)
+all: $(EXEC) $(EXEC_MUPARSER)
+
+# FOR MUPARSER
+###############################################################
+
+$(EXEC_MUPARSER).o: %.o: %.cpp newton.hpp muparser_fun.hpp theta.hpp
+	$(CXX) -c $(CPPFLAGS) $(CPPFLAG_MUPARSER) $(CXXFLAGS) $<
+
+$(EXEC_MUPARSER): %: %.o
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(LDFLAGS_MUPARSER) $< $(LIBS) $(LIB_MUPARSER) -o $@
+
+###############################################################
 
 $(EXEC): $(OBJS)
 	#$(CXX) $(LDFLAGS) $(CXXFLAGS) $< -o main $(LDLIBS)
@@ -30,8 +48,8 @@ $(OBJS): $(SRCS) $(HEADERS)
 
 
 clean:
-	$(RM) *.o *.txt *.png 
+	$(RM) *.o *.png 
 
 distclean: clean
 	$(RM) *~
-	$(RM) main
+	$(RM) main main_muparser
