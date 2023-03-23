@@ -13,8 +13,8 @@ Renna Alessandro alessandro1.renna@mail.polimit.it
 
 The make command has 3 functions: all (default), clean, distclean.
 
-make all creates two main and main_muparser executables (the only difference is how input data is defined).
+make all creates two executables: main and main_muparser: (the only difference is how input data is defined).
 
-make clean and make distclean are file cleanup commands.
+make clean and make distclean are cleanup commands.
 
-Using the Visualize.py file provided in class and modified by us you can get the plot of both executables
+Using the Visualize.py file provided during the lab session, and modified by us, you can get the plot of both executables.
