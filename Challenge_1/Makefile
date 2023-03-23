@@ -15,9 +15,9 @@ EXEC = main
 
 # Flags for the muParser 
 ###############################################################
-CPPFLAG_MUPARSER ?= -I../Examples/include 
+CPPFLAG_MUPARSER ?= -IExamples/include 
 EXEC_MUPARSER     = main_muparser
-LDFLAGS_MUPARSER ?= -L../Examples/lib -Wl,-rpath=../Examples/lib
+LDFLAGS_MUPARSER ?= -LExamples/lib -Wl,-rpath=Examples/lib
 LIB_MUPARSER     ?= -lmuparser
 ###############################################################
 
