@@ -2,14 +2,16 @@
 #define NEWTON_HPP
 
 #include <functional>
+#include <cmath>
+#include <iostream>
 #include <limits>
 
 class NewtonSolver{
 public:
     // constructor: all initialized to 0
     NewtonSolver(
-        const std::function<double(double)> &f,
-        const std::function<double(double)> &df,
+        const std::function<double(const double &)> &f,
+        const std::function<double(const double &)> &df,
         double toll_res = std::numeric_limits<double>::epsilon()*1000,      // default value
         double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
         unsigned int max_it = 1000
