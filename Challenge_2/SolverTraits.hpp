@@ -10,6 +10,8 @@ class SolverTraits
 public: //TODO: USEFUL VARIABLE TYPES
   
   using ReturnType = double;
+  using VariableType = double;
+  using FunctionType = std::function<ReturnType(VariableType)>;
 
 ///////////////////////////////////////////////////
 
