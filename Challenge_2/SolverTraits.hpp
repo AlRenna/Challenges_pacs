@@ -2,7 +2,9 @@
 #define SOLVERTRAITS_HPP
 
 #include <functional>
-#include <Eigen/Dense>
+#include <limits>
+
+
 
 /// Class defining common types for homogeneity.
 class SolverTraits
@@ -12,19 +14,8 @@ public: //TODO: USEFUL VARIABLE TYPES
   using ReturnType = double;
   using VariableType = double;
   using FunctionType = std::function<ReturnType(VariableType)>;
+  //constexpr double  Tolerance = std::numeric_limits<double>::epsilon()*1000;
 
-///////////////////////////////////////////////////
-
-  /// Type used to store the Jacobian.
-  using JacobianMatrixType = Eigen::MatrixXd;
-
-  /// The type for the non-linear system.
-  using NonLinearSystemType = std::function<VariableType(const VariableType &)>;
-
-  /// Type for evaluating the Jacobian.
-  using JacobianFunctionType =
-    std::function<JacobianMatrixType(const VariableType &)>;
-////////////////////////////////////////////////////
 
 };
 

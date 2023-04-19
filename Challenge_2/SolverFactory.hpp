@@ -6,12 +6,22 @@
 #include <memory>
 
 
-enum class SolverType
+
+namespace Zeros
 {
-  Newton = 0,
-  QuasiNewton = 1,
-  Bisection = 2,
-  Secant = 3
+
+class SolverFactory{
+  public:
+    loadSolverFactory() = default;
+    //! Constructor that loads libraries
+    loadSolverFactory(std::string s) { this->load(s); }
+    //! loads load library names (plugins) from file
+    bool load(std::string pluginFile);
+    //! close libraries
+    void close();
+
+  private:
+    std::vector<void *> loadedLibs;
 };
 
 template<class... Args>
@@ -23,5 +33,7 @@ std::unique_ptr<BaseSolver> make_solver(std::string id , Args&&... args) {
     //else if(id== "QuasiNewton")  return std::make_unique<SecantSolver>(std::forward<Args>(args)... );
     else  return std::make_unique<BaseSolver>(std::forward<Args>(args)... );// TODO: return nullptr
 }
+
+} // namespace Zeros
 
 #endif /* SOLVERFACTORY_HPP */

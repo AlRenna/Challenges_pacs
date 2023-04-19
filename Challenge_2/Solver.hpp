@@ -2,7 +2,6 @@
 #define SOLVER_HPP
 
 #include "SolverTraits.hpp"
-#include "newton.hpp"
 #include <functional>
 #include <limits>
 #include <iostream>
@@ -10,96 +9,85 @@
 
 using T = SolverTraits;
 
-class BaseSolver{
+namespace Zeros
+{
 
-    public:
-    BaseSolver(
-        const T::FunctionType &f ,
-        const T::VariableType &x0, 
-        const T::VariableType &xf): 
-            m_f(f),
-            m_x0(x0),
-            m_xf(xf) {};
+    class BaseSolver{
 
-    virtual void solve() {T::ReturnType x=0; return x;};
+        public:
+            BaseSolver() = default; //TODO: make the default constructor
 
-    protected:
-    const T::FunctionType m_f;
-    const T::VariableType m_x0;
-    const T::VariableType m_xf;
+            BaseSolver(
+                const T::FunctionType &f ,
+                const T::VariableType &x0, 
+                const T::VariableType &xf): 
+                    m_f(f),
+                    m_x0(x0),
+                    m_xf(xf) {};
 
-    
-    
+            virtual void solve();
 
-};
+        protected:
+            const T::FunctionType m_f = [&] (T::ReturnType x) {return -x*exp(-x) -2;}; 
+            const T::VariableType m_x0 = 0;
+            const T::VariableType m_xf = 1;
 
-
-///TODO: maybe we can also import the previous work we did for the newton solver and put it in the Examples/include folder
-/*class NewtonSolver{
-
-    public:
-    ReturnType solve() override;
-
-    protected:
-
-    const T::FunctionType &f,
+    };
 
 
+    class QuasiNewtonSolver final: public BaseSolver{
 
-};*/
+        public:
+            QuasiNewtonSolver(
+                const T::FunctionType &f,
+                const T::VariableType &x0,
+                const T::VariableType &xf,
+                double h = 0.05,
+                double toll_res = std::numeric_limits<double>::epsilon()*1000,      // default value
+                double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
+                unsigned int max_it = 100);
 
-class QuasiNewtonSolver final: public BaseSolver{
-
-    public:
-
-    QuasiNewtonSolver(
-        const T::FunctionType &f,
-        const T::VariableType &x0,
-        const T::VariableType &xf,
-        double h = 0.05,
-        double toll_res = std::numeric_limits<double>::epsilon()*1000,      // default value
-        double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
-        unsigned int max_it = 100);
-
-    QuasiNewtonSolver(
-        const BaseSolver &solver,
-        double h = 0.05,
-        double toll_res = std::numeric_limits<double>::epsilon()*1000,      // default value
-        double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
-        unsigned int max_it = 100);
+            QuasiNewtonSolver(
+                const BaseSolver &solver,
+                double h = 0.05,
+                double toll_res = std::numeric_limits<double>::epsilon()*1000,      // default value
+                double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
+                unsigned int max_it = 100);
 
 
-    void solve()  override;
+            void solve()  override;
 
-    T::VariableType GetZero() {return m_x;};
+            T::VariableType GetZero() {return m_x;};
 
-    private:
-    const double m_h = 0.05;
-    const double m_toll_res;
-    const double m_toll_incr;
-    const unsigned int m_max_it;
-    // current values, members that change depending on the iteration:
-    double m_x;     // current guess for the zero
-    double m_df_x;  // current value of df/dx (x)
-    double m_dx;    // current increment
-    double m_res;   // current residual
-    double m_iter;  // current iteration
+        private:
+            const double m_h = 0.05;
+            const double m_toll_res;
+            const double m_toll_incr;
+            const unsigned int m_max_it;
+            // current values, members that change depending on the iteration:
+            double m_x;     // current guess for the zero
+            double m_df_x;  // current value of df/dx (x)
+            double m_dx;    // current increment
+            double m_res;   // current residual
+            double m_iter;  // current iteration
 
-};
+    };
 
-class BisectionSolver final: public BaseSolver{
+    class BisectionSolver final: public BaseSolver{
 
-    public:
-    void solve()  override;  
+        public:
+            void solve()  override;  
 
-};
+    };
 
-class SecantSolver final: public BaseSolver{
+    class SecantSolver final: public BaseSolver{
 
-    public:
-    void solve()  override;
+        public:
+            void solve()  override;
 
 
-};
+    };
+
+} // namespace Zeros
 
 #endif /* SOLVER_HPP */
