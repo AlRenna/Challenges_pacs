@@ -13,17 +13,12 @@ QuasiNewtonSolver::QuasiNewtonSolver(
     const T::VariableType &x0,
     const T::VariableType &xf,
     double h,
-    double toll_res,//std::numeric_limits<double>::epsilon()*1000,      // default value
-    double toll_incr,//std::numeric_limits<double>::epsilon()*1000,     // default value
-    unsigned int max_it) :   // initialization list, constructing the solver passing our parameters (d,df,tollres,tollincr,maxit)
+    double toll_incr):    // default value
         BaseSolver(f,x0,xf),
         m_h(h),
-        m_toll_res(toll_res),
         m_toll_incr(toll_incr),
-        m_max_it(max_it),
 
-        m_res(toll_res +1),
-        m_x((m_xf+m_x0)/2),             // current guess for the result (middle of the domain)
+        m_res(1.),
         m_df_x(0),          // dfdx evaluated in the current result
         m_dx(0),            // current increment
         m_iter(0) {};    // start from it = 0
@@ -31,17 +26,12 @@ QuasiNewtonSolver::QuasiNewtonSolver(
 QuasiNewtonSolver::QuasiNewtonSolver(
     const BaseSolver &solver,
     double h,
-    double toll_res,//std::numeric_limits<double>::epsilon()*1000,      // default value
-    double toll_incr,//std::numeric_limits<double>::epsilon()*1000,     // default value
-    unsigned int max_it) :   // initialization list, constructing the solver passing our parameters (d,df,tollres,tollincr,maxit)
+    double toll_incr):       // default value
         BaseSolver(solver),
         m_h(h),
-        m_toll_res(toll_res),
         m_toll_incr(toll_incr),
-        m_max_it(max_it),
 
-        m_res(toll_res +1),
-        m_x((m_xf+m_x0)/2),             // current guess for the result (middle of the domain)
+        m_res(1.),
         m_df_x(0),          // dfdx evaluated in the current result
         m_dx(0),            // current increment
         m_iter(0) {};    // start from it = 0

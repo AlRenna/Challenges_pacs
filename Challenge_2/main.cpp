@@ -12,19 +12,24 @@ int main(){
         return -x*exp(-x) -2;    
     };
     
-    auto df = [&](double t, double y){
+    auto df = [&](double x){
         return -exp(-x) + x*exp(-x) ;
     };
     
     T::VariableType x0 = -1, xf = 2;
-
+    
+/*
     /// Newton Solver (imported)
     std::string id ="Newton";
-    auto Nsolver = make_solver<QuasiNewtonSolver>(id,Bsolver);
+    auto Nsolver = make_solver<QuasiNewtonSolver>(id,f,df,x0,xf);
+*/
 
     /// Derived Solvers
     BaseSolver Bsolver(f,x0,xf);
-    id ="QuasiNewton";
+    std::string id ="QuasiNewton";
+    double h=0.05;
+    double toll_incr = std::numeric_limits<double>::epsilon()*1000; 
+    auto QNsolver = make_solver<QuasiNewtonSolver>(id,f,x0,xf,h,toll_incr);
     auto QNsolver = make_solver<QuasiNewtonSolver>(id,Bsolver);
     QNsolver.solve();
     std::cout<< QNsolver.GetZero()<< std::endl;
@@ -32,7 +37,6 @@ int main(){
 
 
 
-    std::cout<< result << std::endl;
     
 
     /*

@@ -17,8 +17,8 @@ enum class SolverType
 template<class... Args>
 std::unique_ptr<BaseSolver> make_solver(std::string id , Args&&... args) {
     
-    if(id== "Newton") return std::make_unique<NewtonSolver>(std::forward<Args>(args)... ); //return std::make_unique<NewtonSolver>(std::forward<Args>(args);
-    else if(id== "QuasiNewton") return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)... );
+    //if(id== "Newton") return std::make_unique<NewtonSolver>(std::forward<Args>(args)... ); //return std::make_unique<NewtonSolver>(std::forward<Args>(args);
+    if(id== "QuasiNewton") return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)... );
     //else if(id== "Bisection") return std::make_unique<BisectionSolver>(std::forward<Args>(args)... );
     //else if(id== "QuasiNewton")  return std::make_unique<SecantSolver>(std::forward<Args>(args)... );
     else  return std::make_unique<BaseSolver>(std::forward<Args>(args)... );// TODO: return nullptr

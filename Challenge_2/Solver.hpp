@@ -16,37 +16,32 @@ class BaseSolver{
     BaseSolver(
         const T::FunctionType &f ,
         const T::VariableType &x0, 
-        const T::VariableType &xf): 
+        const T::VariableType &xf,
+        const unsigned int max_it=100,
+        const double toll_res = std::numeric_limits<double>::epsilon()*1000): 
+            m_x((xf+x0)/2),
             m_f(f),
             m_x0(x0),
-            m_xf(xf) {};
+            m_xf(xf),
+            m_max_it(max_it),
+            m_toll_res(toll_res){};  // current guess for the zero (middle of the domain)
 
-    virtual void solve() {T::ReturnType x=0; return x;};
+    virtual void solve() {};
+
+    T::ReturnType GetZero() {return m_x;};
 
     protected:
+    double m_x;     // current guess for the zero
     const T::FunctionType m_f;
-    const T::VariableType m_x0;
-    const T::VariableType m_xf;
+    const T::VariableType m_x0; //left boundary
+    const T::VariableType m_xf; //right boundary
+    const unsigned int m_max_it; // maximum number of iterations
+    const double m_toll_res;    // tollerance for solvers
 
-    
-    
+
 
 };
 
-
-///TODO: maybe we can also import the previous work we did for the newton solver and put it in the Examples/include folder
-/*class NewtonSolver{
-
-    public:
-    ReturnType solve() override;
-
-    protected:
-
-    const T::FunctionType &f,
-
-
-
-};*/
 
 class QuasiNewtonSolver final: public BaseSolver{
 
@@ -56,30 +51,24 @@ class QuasiNewtonSolver final: public BaseSolver{
         const T::FunctionType &f,
         const T::VariableType &x0,
         const T::VariableType &xf,
-        double h = 0.05,
-        double toll_res = std::numeric_limits<double>::epsilon()*1000,      // default value
-        double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
-        unsigned int max_it = 100);
+        double h = 0.05,                                                     // default value
+        double toll_incr = std::numeric_limits<double>::epsilon()*1000);     // default value
+        
 
     QuasiNewtonSolver(
         const BaseSolver &solver,
         double h = 0.05,
-        double toll_res = std::numeric_limits<double>::epsilon()*1000,      // default value
-        double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
-        unsigned int max_it = 100);
+        double toll_incr = std::numeric_limits<double>::epsilon()*1000);     // default value
 
 
     void solve()  override;
 
-    T::VariableType GetZero() {return m_x;};
 
     private:
     const double m_h = 0.05;
-    const double m_toll_res;
     const double m_toll_incr;
-    const unsigned int m_max_it;
+
     // current values, members that change depending on the iteration:
-    double m_x;     // current guess for the zero
     double m_df_x;  // current value of df/dx (x)
     double m_dx;    // current increment
     double m_res;   // current residual
@@ -91,6 +80,14 @@ class BisectionSolver final: public BaseSolver{
 
     public:
     void solve()  override;  
+
+    private:
+    const double m_toll_incr;
+    // current values, members that change depending on the iteration:
+    double m_df_x;  // current value of df/dx (x)
+    double m_dx;    // current increment
+    double m_res;   // current residual
+    double m_iter;  // current iteration
 
 };
 
