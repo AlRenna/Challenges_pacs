@@ -21,7 +21,7 @@ class BaseSolver{
             m_x0(x0),
             m_xf(xf) {};
 
-    virtual void solve() {T::ReturnType x=0; return x;};
+    virtual void solve(); // {T::ReturnType x=0; return x;};
 
     protected:
     const T::FunctionType m_f;
