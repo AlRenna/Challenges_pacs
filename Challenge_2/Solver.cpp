@@ -10,6 +10,7 @@
 
 namespace Zeros
 {
+/*
 
     QuasiNewtonSolver::QuasiNewtonSolver(
         const T::FunctionType &f,
@@ -71,6 +72,20 @@ namespace Zeros
 
     }
 
+    /////////////////////////////////// BISECTION /////////////////////////////////
+
+    void BisectionSolver::solve() {std::cout<< "BisectionSolver"<<std::endl;}
+
+
+    /////////////////////////////////// SECANT /////////////////////////////////
+
+    void SecantSolver::solve() {std::cout<< "SecantSolver"<<std::endl;}
+
+
+
+
+
+
     namespace
     {
         //! This will register the objects in the factory automatically when the
@@ -78,10 +93,12 @@ namespace Zeros
         void __attribute__((constructor)) LoadF()
         {
             // add triangle and square to the factory
-            solverFactory["Quasinewton"] = []() { return std::make_unique<QuasinewtonSolver>(); };
-            solverFactory["Bisection"] = []() { return std::make_unique<BisectionSolver>(); };
-            solverFactory["Secant"] = []() { return std::make_unique<SecantSolver>(); };
+            solverFactory["Quasinewton"] = []() { return std::make_unique<QuasiNewtonSolver>(); };
+            //solverFactory["BisectionSolver"] = []() { return std::make_unique<BisectionSolver>(); };
+            //solverFactory["Secant"] = []() { return std::make_unique<SecantSolver>(); };
         }
     } // namespace 
 
+
+*/
 } // namespace Zeros

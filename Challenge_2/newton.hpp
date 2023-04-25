@@ -14,6 +14,7 @@ namespace Zeros
 class NewtonSolver final: public BaseSolver
 {
     public:
+        NewtonSolver();
         // constructor: all initialized to 0
         NewtonSolver(
             const T::FunctionType &f,
@@ -34,16 +35,18 @@ class NewtonSolver final: public BaseSolver
         double get_residual() const { return m_res; }
 
         void solve() override; // netwon solver implementation
+
+        virtual ~NewtonSolver() {};
             
         
 
     private:
         // m_ stands for "member of the class", see the constructor
         const std::function<double(double)> m_f;
-        const std::function<double(double)> m_df;
-        const double m_toll_res;
-        const double m_toll_incr;
-        const unsigned int m_max_it;
+        const std::function<double(double)> m_df = [&] (T::ReturnType x) {return 1 + 0*x;};;
+        const double m_toll_res = std::numeric_limits<double>::epsilon()*1000;
+        const double m_toll_incr = std::numeric_limits<double>::epsilon()*1000;
+        const unsigned int m_max_it = 1000;
         // current values, members that change depending on the iteration:
         double m_x = 0;     // current guess for the zero
         double m_df_x = 0;  // current value of df/dx (x)

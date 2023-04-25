@@ -1,6 +1,6 @@
 #include "FactoryTraits.hpp"
 #include "Solver.hpp"
-#include "SolverFactory.hpp"
+#include "loadSolverFactory.hpp"
 #include <dlfcn.h>
 #include <iostream>
 
@@ -11,7 +11,8 @@ main()
   using namespace Zeros;
   using namespace std;
   // load the libraries (plugins)
-  SolverFactory loadPlugins("plugins.txt");  ///TODO: CHANGE THE NAME OF THE CLASS AND FILE TO loadSolverFactory
+  std::string plugins = "plugins.txt";
+  loadSolverFactory loadPlugins(plugins);  
   // Try the factory
   while(true)
     {

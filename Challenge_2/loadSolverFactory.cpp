@@ -1,11 +1,11 @@
 
-#include "SolverFactory.hpp"
-//#include "string_utility.hpp" //TODO: find the file!!!!!
+#include "loadSolverFactory.hpp"
+#include "./Examples/utilities/string_utility.hpp" 
 
 namespace Zeros
 {
 bool
-SolverFactory::load(std::string pluginFile)
+loadSolverFactory::load(std::string pluginFile)
 {
   bool          good = true;
   std::ifstream pFile(pluginFile);
@@ -48,7 +48,7 @@ SolverFactory::load(std::string pluginFile)
 }
 
 void
-SolverFactory::close()
+loadSolverFactory::close()
 {
   // close all hold libraries
   for(auto l : this->loadedLibs)

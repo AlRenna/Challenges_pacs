@@ -9,11 +9,11 @@
 int main(){
 
     auto f = [&](double x){
-        return -x*exp(-x) -2;    
+        return x - 2;    
     };
     
     auto df = [&](double t, double y){
-        return -exp(-x) + x*exp(-x) ;
+        return 1 ;
     };
     
     T::VariableType x0 = -1, xf = 2;

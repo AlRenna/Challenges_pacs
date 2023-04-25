@@ -3,6 +3,7 @@
 
 #include "SolverTraits.hpp"
 #include <functional>
+#include <memory>
 #include <limits>
 #include <iostream>
 
@@ -15,7 +16,7 @@ namespace Zeros
     class BaseSolver{
 
         public:
-            BaseSolver() = default; //TODO: make the default constructor
+            BaseSolver(); //TODO: make the default constructor
 
             BaseSolver(
                 const T::FunctionType &f ,
@@ -27,17 +28,21 @@ namespace Zeros
 
             virtual void solve();
 
+            virtual ~BaseSolver();
+
         protected:
-            const T::FunctionType m_f = [&] (T::ReturnType x) {return -x*exp(-x) -2;}; 
+            const T::FunctionType m_f = [&] (T::ReturnType x) {return x - 2;}; 
             const T::VariableType m_x0 = 0;
             const T::VariableType m_xf = 1;
 
     };
 
-
+/*
     class QuasiNewtonSolver final: public BaseSolver{
 
         public:
+            QuasiNewtonSolver();
+
             QuasiNewtonSolver(
                 const T::FunctionType &f,
                 const T::VariableType &x0,
@@ -61,15 +66,15 @@ namespace Zeros
 
         private:
             const double m_h = 0.05;
-            const double m_toll_res;
-            const double m_toll_incr;
-            const unsigned int m_max_it;
+            const double m_toll_res  = std::numeric_limits<double>::epsilon()*1000;
+            const double m_toll_incr  = std::numeric_limits<double>::epsilon()*1000;
+            const unsigned int m_max_it = 1000;
             // current values, members that change depending on the iteration:
-            double m_x;     // current guess for the zero
-            double m_df_x;  // current value of df/dx (x)
-            double m_dx;    // current increment
-            double m_res;   // current residual
-            double m_iter;  // current iteration
+            double m_x = 0;     // current guess for the zero
+            double m_df_x = 0;  // current value of df/dx (x)
+            double m_dx = 0;    // current increment
+            double m_res = 0;   // current residual
+            unsigned int m_iter = 0;  // current iteration
 
     };
 
@@ -87,6 +92,7 @@ namespace Zeros
 
 
     };
+*/
 
 } // namespace Zeros
 

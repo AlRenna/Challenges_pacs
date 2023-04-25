@@ -1,9 +1,9 @@
 FactoryTraits.o: FactoryTraits.cpp FactoryTraits.hpp Solver.hpp \
  SolverTraits.hpp
 Solver.o: Solver.cpp Solver.hpp SolverTraits.hpp
-SolverFactory.o: SolverFactory.cpp SolverFactory.hpp Solver.hpp \
- SolverTraits.hpp
+loadSolverFactory.o: loadSolverFactory.cpp loadSolverFactory.hpp \
+ Solver.hpp SolverTraits.hpp Examples/utilities/string_utility.hpp
 main_solver.o: main_solver.cpp FactoryTraits.hpp Solver.hpp \
- SolverTraits.hpp SolverFactory.hpp
+ SolverTraits.hpp loadSolverFactory.hpp
 newton.o: newton.cpp newton.hpp Solver.hpp SolverTraits.hpp \
  FactoryTraits.hpp

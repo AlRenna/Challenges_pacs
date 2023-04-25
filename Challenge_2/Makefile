@@ -39,7 +39,7 @@ EXEC=$(exe_sources:.cpp=)
 CPPFLAGS ?= -O3 -Wall -I. -I${mkEigenInc} -IExamples/utilities #-pedantic
 CXXFLAGS+=-fPIC
 LDFLAGS= $(OPTFLAGS) -Wl,-rpath,.
-LDLIBS=-L. -lFactory -ldl
+LDLIBS=-L. -lFactory -lNewton -ldl
 #========================== ORA LA DEFINIZIONE DEGLI OBIETTIVI
 .phony= all clean distclean doc
 
@@ -47,13 +47,13 @@ LDLIBS=-L. -lFactory -ldl
 
 all: $(DEPEND) library $(EXEC)
 
-library: libFactory.so libNewton.so libSolver.so 
+library: libFactory.so libNewton.so 
 
 libFactory.so: FactoryTraits.o
-	$(CXX)  $(CPPFLAGS) $(OPTFLAGS) -shared FactoryTraits.o  -o libFactory.so 
+	$(CXX)   $(OPTFLAGS) -shared -L. FactoryTraits.o -static  -o libFactory.a 
 
-libNewton.so: newton.o Solver.o
-	$(CXX)  $(CPPFLAGS) $(OPTFLAGS) -shared newton.o Solver.o  -L. -lFactory -o libNewton.so
+libNewton.so:  Solver.o newton.o 
+	$(CXX)   $(OPTFLAGS) -shared -L. -lFactory  newton.o Solver.o -static   -o libNewton.a
 
 
 
@@ -68,7 +68,7 @@ distclean:
 doc:
 	doxygen $(DOXYFILE)
 
-$(EXEC): main_solver.o Solver.o SolverFactory.o
+$(EXEC): main_solver.o Solver.o loadSolverFactory.o
 
 
 $(OBJS): $(SRCS)
