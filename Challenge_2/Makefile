@@ -50,10 +50,10 @@ all: $(DEPEND) library $(EXEC)
 library: libFactory.so libNewton.so 
 
 libFactory.so: FactoryTraits.o
-	$(CXX)   $(OPTFLAGS) -shared -L. FactoryTraits.o -static  -o libFactory.a 
+	$(CXX)   $(OPTFLAGS) -shared -L. FactoryTraits.o -static  -o libFactory.so 
 
 libNewton.so:  Solver.o newton.o 
-	$(CXX)   $(OPTFLAGS) -shared -L. -lFactory  newton.o Solver.o -static   -o libNewton.a
+	$(CXX)   $(OPTFLAGS) -shared -L. -lFactory  newton.o Solver.o -static   -o libNewton.so
 
 
 
