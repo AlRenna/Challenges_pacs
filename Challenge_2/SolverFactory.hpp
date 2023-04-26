@@ -14,17 +14,6 @@ enum class SolverType : unsigned int
   SecantSolver = 3
 };
 
-// TODO: problema nella conversione tra i puntatori
-// template<class... Args>
-// std::unique_ptr<BaseSolver> make_solver(std::string id , Args&&... args) {
-    
-//     if(id== "Newton") return std::make_unique<NewtonSolver>(std::forward<Args>(args)... ); //return std::make_unique<NewtonSolver>(std::forward<Args>(args);
-//     else if(id== "QuasiNewton") return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)... );
-//     //else if(id== "Bisection") return std::make_unique<BisectionSolver>(std::forward<Args>(args)... );
-//     //else if(id== "QuasiNewton")  return std::make_unique<SecantSolver>(std::forward<Args>(args)... );
-//     else  return std::make_unique<BaseSolver>(std::forward<Args>(args)... );// TODO: return nullptr
-// }
-
 
 template <class SolClass,SolverType SolType, class... Args>
 std::unique_ptr<SolClass>
@@ -35,14 +24,18 @@ make_solver(Args &&... args)
   //                 SolType == BaseSolver,
   //               "Error in SolverType: Solver not yet implemented");
 
- /*  if constexpr (SolType == SolverType::NewtonSolver)
+  if constexpr (SolType == SolverType::NewtonSolver)
     return std::make_unique<NewtonSolver>(std::forward<Args>(args)...);
   else if constexpr (SolType == SolverType::QuasiNewtonSolver)
     return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);
+  else if constexpr (SolType == SolverType::BisectionSolver)
+    return std::make_unique<BisectionSolver>(std::forward<Args>(args)...);
+  else if constexpr (SolType == SolverType::SecantSolver)
+    return std::make_unique<SecantSolver>(std::forward<Args>(args)...);
   else 
-    return std::make_unique<BaseSolver>(nullptr); */
+    return std::make_unique<BaseSolver>(nullptr);
 
-    return std::make_unique<SolClass>(std::forward<Args>(args)...);
+    // return std::make_unique<SolClass>(std::forward<Args>(args)...);
 }
 
 #endif /* SOLVERFACTORY_HPP */

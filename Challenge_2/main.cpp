@@ -18,29 +18,41 @@ int main(){
     
     T::VariableType x0 = -1, xf = 2;
 
+    const unsigned int max_iter = 100;
+
     /* /// Newton Solver (imported)
-    std::string id ="Newton";
-    BaseSolver Bsolver(f,x0,xf);
-    auto Nsolver = make_solver<QuasiNewtonSolver>(id,Bsolver);
-
-    /// Derived Solvers
-    // BaseSolver Bsolver(f,x0,xf);
-    id ="QuasiNewton";
-    auto QNsolver = make_solver<QuasiNewtonSolver>(id,Bsolver);
-    QNsolver.solve();
-    std::cout<< QNsolver.GetZero()<< std::endl; */
-
-    /// Newton Solver (imported)
     BaseSolver Bsolver(f,x0,xf);
     auto Nsolver = make_solver<NewtonSolver,SolverType::NewtonSolver>(f,df);
 
     /// Derived Solvers
     // BaseSolver Bsolver(f,x0,xf);
     // id ="QuasiNewton";
-    auto QNsolver = make_solver<QuasiNewtonSolver,SolverType::QuasiNewtonSolver>(Bsolver);
+    auto QNsolver = make_solver<QuasiNewtonSolver,SolverType::QuasiNewtonSolver>(f,x0,xf);
     
     QNsolver->solve();
-    std::cout<< QNsolver->GetZero()<< std::endl;
+    std::cout<< QNsolver->GetZero()<< std::endl; */
+
+    auto BiSolver = make_solver<BisectionSolver,SolverType::BisectionSolver>(f,x0,xf,max_iter);
+    BiSolver->solve();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
