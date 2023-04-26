@@ -16,7 +16,7 @@ namespace Zeros
     class BaseSolver{
 
         public:
-            BaseSolver(); //TODO: make the default constructor
+            BaseSolver() = default; //TODO: make the default constructor
 
             BaseSolver(
                 const T::FunctionType &f ,
@@ -28,7 +28,7 @@ namespace Zeros
 
             virtual void solve();
 
-            virtual ~BaseSolver();
+            virtual ~BaseSolver() = default;
 
         protected:
             const T::FunctionType m_f = [&] (T::ReturnType x) {return x - 2;}; 

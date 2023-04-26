@@ -14,17 +14,17 @@ namespace Zeros
 class NewtonSolver final: public BaseSolver
 {
     public:
-        NewtonSolver();
+        NewtonSolver() = default;
         // constructor: all initialized to 0
         NewtonSolver(
-            const T::FunctionType &f,
+            //const T::FunctionType &f,
             const T::FunctionType &df,
-            double toll_res = std::numeric_limits<double>::epsilon()*1000, //T::Tolerance,      // default value
+            double toll_res = std::numeric_limits<double>::epsilon()*1000,     // default value
             double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
             unsigned int max_it = 1000
         )
         :   // initialization list, constructing the solver passing our parameters (d,df,tollres,tollincr,maxit)
-        m_f(f),
+        //m_f(f),
         m_df(df),
         m_toll_res(toll_res),
         m_toll_incr(toll_incr),
@@ -36,14 +36,14 @@ class NewtonSolver final: public BaseSolver
 
         void solve() override; // netwon solver implementation
 
-        virtual ~NewtonSolver() {};
+        virtual ~NewtonSolver() = default;
             
         
 
     private:
         // m_ stands for "member of the class", see the constructor
-        const std::function<double(double)> m_f;
-        const std::function<double(double)> m_df = [&] (T::ReturnType x) {return 1 + 0*x;};;
+        //const std::function<double(double)> m_f; = [&] (T::ReturnType x) {return x - 2;};
+        const std::function<double(double)> m_df = [&] (T::ReturnType x) {return 1 + 0*x;};
         const double m_toll_res = std::numeric_limits<double>::epsilon()*1000;
         const double m_toll_incr = std::numeric_limits<double>::epsilon()*1000;
         const unsigned int m_max_it = 1000;

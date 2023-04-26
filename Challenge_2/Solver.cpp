@@ -6,11 +6,16 @@
 
 
 
-/////////////////////////////////// QUASINEWTON /////////////////////////////////
+/////////////////////////////////// DERIVED CLASSES /////////////////////////////////
+
+/////// QUASINEWTON
+
+
+
+/*
 
 namespace Zeros
 {
-/*
 
     QuasiNewtonSolver::QuasiNewtonSolver(
         const T::FunctionType &f,
@@ -72,18 +77,14 @@ namespace Zeros
 
     }
 
-    /////////////////////////////////// BISECTION /////////////////////////////////
+    ///////////// BISECTION 
 
     void BisectionSolver::solve() {std::cout<< "BisectionSolver"<<std::endl;}
 
 
-    /////////////////////////////////// SECANT /////////////////////////////////
+    //////////// SECANT 
 
     void SecantSolver::solve() {std::cout<< "SecantSolver"<<std::endl;}
-
-
-
-
 
 
     namespace
@@ -99,6 +100,8 @@ namespace Zeros
         }
     } // namespace 
 
+} // namespace Zeros
 
 */
-} // namespace Zeros
+
+
