@@ -32,7 +32,7 @@ int main(){
 
     /// Newton Solver (imported)
     BaseSolver Bsolver(f,x0,xf);
-    auto Nsolver = make_solver<QuasiNewtonSolver,SolverType::QuasiNewtonSolver>(Bsolver);
+    auto Nsolver = make_solver<NewtonSolver,SolverType::NewtonSolver>(f,df);
 
     /// Derived Solvers
     // BaseSolver Bsolver(f,x0,xf);

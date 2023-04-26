@@ -35,12 +35,14 @@ make_solver(Args &&... args)
   //                 SolType == BaseSolver,
   //               "Error in SolverType: Solver not yet implemented");
 
-  if constexpr (SolType == SolverType::NewtonSolver)
+ /*  if constexpr (SolType == SolverType::NewtonSolver)
     return std::make_unique<NewtonSolver>(std::forward<Args>(args)...);
   else if constexpr (SolType == SolverType::QuasiNewtonSolver)
     return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);
   else 
-    return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);
+    return std::make_unique<BaseSolver>(nullptr); */
+
+    return std::make_unique<SolClass>(std::forward<Args>(args)...);
 }
 
 #endif /* SOLVERFACTORY_HPP */
