@@ -13,6 +13,8 @@ using T = SolverTraits;
 class BaseSolver{
 
     public:
+    BaseSolver() = default;
+
     BaseSolver(
         const T::FunctionType &f ,
         const T::VariableType &x0, 
@@ -22,6 +24,8 @@ class BaseSolver{
             m_xf(xf) {};
 
     virtual void solve(); // {T::ReturnType x=0; return x;};
+
+    //~BaseSolver() = default;
 
     protected:
     const T::FunctionType m_f;
@@ -52,6 +56,8 @@ class QuasiNewtonSolver final: public BaseSolver{
 
     public:
 
+    QuasiNewtonSolver() = default;
+
     QuasiNewtonSolver(
         const T::FunctionType &f,
         const T::VariableType &x0,
@@ -69,15 +75,20 @@ class QuasiNewtonSolver final: public BaseSolver{
         unsigned int max_it = 100);
 
 
-    void solve()  override;
+    void solve() override;
 
-    T::VariableType GetZero() {return m_x;};
+
+    /// New Methods
+    T::VariableType GetZero() {return m_x;}
+
+    //~QuasiNewtonSolver() = default;
 
     private:
+    /// new members
     const double m_h = 0.05;
-    const double m_toll_res;
-    const double m_toll_incr;
-    const unsigned int m_max_it;
+    const double m_toll_res = std::numeric_limits<double>::epsilon()*1000;
+    const double m_toll_incr = std::numeric_limits<double>::epsilon()*1000;
+    const unsigned int m_max_it = 100;
     // current values, members that change depending on the iteration:
     double m_x;     // current guess for the zero
     double m_df_x;  // current value of df/dx (x)

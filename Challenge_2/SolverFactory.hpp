@@ -26,8 +26,8 @@ enum class SolverType : unsigned int
 // }
 
 
-template <SolverType SolType, class... Args>
-std::unique_ptr<BaseSolver>
+template <class SolClass,SolverType SolType, class... Args>
+std::unique_ptr<SolClass>
 make_solver(Args &&... args)
 {
   // static_assert(SolType == SolverType::NewtonSolver ||
@@ -40,7 +40,7 @@ make_solver(Args &&... args)
   else if constexpr (SolType == SolverType::QuasiNewtonSolver)
     return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);
   else 
-    return std::make_unique<BaseSolver>(std::forward<Args>(args)...);
+    return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);
 }
 
 #endif /* SOLVERFACTORY_HPP */

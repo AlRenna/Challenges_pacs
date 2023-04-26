@@ -8,6 +8,9 @@
 
 /////////////////////////////////// QUASINEWTON /////////////////////////////////
 
+
+
+
 QuasiNewtonSolver::QuasiNewtonSolver(
     const T::FunctionType &f,
     const T::VariableType &x0,

@@ -32,17 +32,15 @@ int main(){
 
     /// Newton Solver (imported)
     BaseSolver Bsolver(f,x0,xf);
-    auto Nsolver = make_solver<SolverType::QuasiNewtonSolver>(Bsolver);
+    auto Nsolver = make_solver<QuasiNewtonSolver,SolverType::QuasiNewtonSolver>(Bsolver);
 
     /// Derived Solvers
     // BaseSolver Bsolver(f,x0,xf);
     // id ="QuasiNewton";
-    auto QNsolver = make_solver<SolverType::QuasiNewtonSolver>(Bsolver);
+    auto QNsolver = make_solver<QuasiNewtonSolver,SolverType::QuasiNewtonSolver>(Bsolver);
     
-    // QNsolver.solve();
-    // std::cout<< QNsolver.GetZero()<< std::endl;
-
-
+    QNsolver->solve();
+    std::cout<< QNsolver->GetZero()<< std::endl;
 
 
 

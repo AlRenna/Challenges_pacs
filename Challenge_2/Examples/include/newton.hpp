@@ -6,6 +6,9 @@
 
 class NewtonSolver{
 public:
+
+    NewtonSolver() = default;
+    
     // constructor: all initialized to 0
     NewtonSolver(
         const std::function<double(double)> &f,
@@ -43,6 +46,8 @@ public:
                 break;
         }
     }
+
+    //~NewtonSolver() = default;
 
 private:
     // m_ stands for "member of the class", see the constructor
