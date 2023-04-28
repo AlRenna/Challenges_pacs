@@ -12,9 +12,10 @@ make_solver(std::string const &name, Args &&...args)
     return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);
   if(name == "Bisection")
     return std::make_unique<BisectionSolver>(std::forward<Args>(args)...);
-//   if(name == "Secant")
-//     return std::make_unique<SecantSolver>(std::forward<Args>(args)...);
+  if(name == "Secant")
+    return std::make_unique<SecantSolver>(std::forward<Args>(args)...);
   // this way I can easily check if I try to construct a non existent Polygon
+  std::cout << "Returning nullpointer to BaseSolver" << std::endl;
   return std::unique_ptr<BaseSolver>(nullptr);
 }
 
