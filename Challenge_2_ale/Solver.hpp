@@ -26,17 +26,23 @@ class BaseSolver
         const ST::ReturnType &toll_res,
         const ST::VariableType &h,
         const ST::VariableType &toll_incr);
-
+    
     virtual ST::ReturnType solve() { return m_zero;};
 
     protected:
 
+    // given function
     const ST::FunctionType m_f;
+    // boundary values
     const ST::VariableType m_x0;
     const ST::VariableType m_xf;
+    // max number of iteration for the evaluation of the zero
     const unsigned int m_max_iter = 1e3;
+    // tolerance on the residual
     const ST::ReturnType m_toll_res = std::numeric_limits<double>::epsilon()*1000;
+    // increment
     const ST::VariableType m_h;
+    // tolerance over the increment
     const ST::VariableType m_toll_incr = std::numeric_limits<ST::VariableType>::epsilon()*1000;
     
     ST::ReturnType m_zero = 0.;
