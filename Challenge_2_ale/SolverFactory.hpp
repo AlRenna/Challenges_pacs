@@ -4,9 +4,9 @@
 #include "Solver.hpp"
 #include <memory>
 
-template<typename ...Args>
+template<class ...Args>
 std::unique_ptr<BaseSolver>
-createPolygon(std::string const &name, Args ...args)
+make_solver(std::string const &name, Args &&...args)
 {
   if(name == "QuasiNewton")
     return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);

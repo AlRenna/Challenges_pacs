@@ -23,7 +23,7 @@ class BaseSolver
         const ST::VariableType &x0,
         const ST::VariableType &xf);
 
-    virtual ST::ReturnType solve();
+    virtual ST::ReturnType solve() { return m_zero;};
 
     protected:
 
@@ -39,6 +39,7 @@ class BaseSolver
 
 class QuasiNewtonSolver final : public BaseSolver
 {   
+    public:
     // using BaseSolver::BaseSolver;
     QuasiNewtonSolver(
         const ST::FunctionType &f,
@@ -53,6 +54,7 @@ class QuasiNewtonSolver final : public BaseSolver
 
 class BisectionSolver final : public BaseSolver
 {
+    public:
     // using BaseSolver::BaseSolver;
     BisectionSolver(
         const ST::FunctionType &f,

@@ -1,34 +1,27 @@
 CXX      ?= g++
-CXXFLAGS ?= -std=c++20
-CPPFLAGS ?= -O3 -Wall -I.  
-LDFLAGS ?= 
-LDLIBS  ?= 
+CXXFLAGS ?= -std=c++20 -O3 -fPIC
+CPPFLAGS ?= -O3 -Wall -pedantic -I. 
+LDFLAGS = 
+LIBS = 
 
+# LINK.o := $(LINK.cc) # Use C++ linker.
 
-SRCS = main.cpp
-OBJS = $(SRCS:.cpp=.o)
-HEADERS = $(wildcard *.hpp)
+.PHONY: all clean distclean
 
+all: main
 
-EXEC = main
+main: main.o Solver.o
+	$(CXX) $(LDFLAGS) main.o Solver.o -o main
 
-.PHONY = all clean distclean
+main.o: main.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c main.cpp
 
-.DEFAULT_GOAL = all
-
-all: $(EXEC) 
-
-$(EXEC): $(OBJS)
-	$(CXX)  $(CXXFLAGS) $(OBJS) -o main 
-
-
-$(OBJS): $(SRCS) $(HEADERS)
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(SRCS)
-
+Solver.o: Solver.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c Solver.cpp
 
 clean:
-	$(RM) *.o 
+	$(RM) *.o
 
 distclean: clean
 	$(RM) *~
-	$(RM) main 
+	$(RM) main
