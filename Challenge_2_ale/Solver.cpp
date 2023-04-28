@@ -43,8 +43,12 @@ ST::ReturnType QuasiNewtonSolver::solve() {
     for (unsigned int m_iter = 0; m_iter < m_max_iter; ++m_iter){
         m_res = m_f(m_zero);       // function evaluated in the current point
         // std::cout<< "Zero:" << m_zero<< "---- Residual:" << m_res <<std::endl;
-        if (std::abs(m_res) < m_toll_res)
+        if (std::abs(m_res) < m_toll_res){
+            if (m_zero < m_x0 || m_zero > m_xf){
+                std::cout << "Zero found outside the given domain" << std::endl;
+            }
             break;
+        }
         m_df_x = (m_f(m_zero+m_h)-m_f(m_zero-m_h))/(2*m_h);  // approx of the derivative
         m_dx = m_res / m_df_x;
         m_zero -= m_dx;                // m_dx = m_x(k) - m_x(k+1)
@@ -74,6 +78,7 @@ ST::ReturnType BisectionSolver::solve() {
     ST::VariableType a = m_x0, b = m_xf;
     ST::ReturnType m_res;   // current residual
 
+    // check for different signs of f on the boundary points
     if (fa * fb < 0){
         for (unsigned int m_iter = 0; m_iter < m_max_iter; ++m_iter){
             fa = m_f(a);
@@ -82,8 +87,12 @@ ST::ReturnType BisectionSolver::solve() {
             m_res = m_f(m_zero);       // function evaluated in the current point
             // std::cout<< "Zero:" << m_zero<< "---- Residual:" << m_res <<std::endl;
 
-            if (std::abs(m_res) < m_toll_res)
+            if (std::abs(m_res) < m_toll_res){
+                if (m_zero < m_x0 || m_zero > m_xf){
+                    std::cout << "Zero found outside the given domain" << std::endl;
+                }
                 break;
+            }
             if (m_f(m_zero) * fa < 0)
                 b = m_zero;
             else 

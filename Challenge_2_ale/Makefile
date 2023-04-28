@@ -6,22 +6,26 @@ LIBS =
 
 # LINK.o := $(LINK.cc) # Use C++ linker.
 
-.PHONY: all clean distclean
+EXEC = main
+SRCS = $(wildcard *.cpp)
+OBJS = $(SRCS:.cpp=.o)
 
-all: main
+.PHONY = all $(EXEC) $(OBJS) clean distclean #$(DEPEND)
 
-main: main.o Solver.o
-	$(CXX) $(LDFLAGS) main.o Solver.o -o main
+.DEFAULT_GOAL = all
 
-main.o: main.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c main.cpp
 
-Solver.o: Solver.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c Solver.cpp
+all: $(EXEC)
+
+$(EXEC): $(OBJS)	
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(OBJS)  -o main 
+
+$(OBJS): %.o: %.cpp
+	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(SRCS)
 
 clean:
-	$(RM) *.o
+	$(RM) *.o result.txt
 
 distclean: clean
+	$(RM) $(EXEC)
 	$(RM) *~
-	$(RM) main

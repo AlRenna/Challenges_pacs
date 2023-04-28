@@ -1,0 +1,8 @@
+Using QuasiNewton method
+Zero found: -0.220636
+
+Using Bisection method
+Zero found: -0.220636
+
+Using Secant method
+Zero found: -0.220636
