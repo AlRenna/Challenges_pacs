@@ -1,75 +1,74 @@
 #include "Solver.hpp"
+#include <type_traits>
+#include <iostream>
 
+
+using T = SolverTraits;
 /////////////////////////////////// BASE CLASS /////////////////////////////////
 
-BaseSolver::BaseSolver(
-    const T::FunctionType &f ,
-    const T::VariableType &x0, 
-    const T::VariableType &xf,
-    const unsigned int max_it): 
-        m_f(f),
-        m_x0(x0),
-        m_xf(xf),
-        m_max_it(max_it),
-        m_x(x0) {};
+/* BaseSolver::BaseSolver(const func_t &f_, const T::VariableType &x0_, const T::VariableType &xf_, const unsigned int &max_it) 
+        : 
+        m_f{f_} ,
+        m_x0{x0_},
+        m_xf{xf_},
+        m_max_it{max_it} {} */
 
+
+
+/////////////////////////////////// NEWTON /////////////////////////////////////
+
+
+/* void NewtonSolver::solve() {
+    m_x = m_x0;                                 // first guess
+    T::ReturnType df_x = m_df(m_x);             //  derivative at current timestep
+    T::VariableType dx = m_res / df_x;          // space step
+
+    for (m_iter = 0; m_iter < m_max_it; ++m_iter){
+        m_res = m_f(m_x);                       // function evaluated in the current point
+        if (std::abs(m_res) < m_toll_res)
+            break;
+        df_x = m_df(m_x);
+        dx = m_res / df_x;
+        m_x -= dx;                              // m_dx = m_x(k) - m_x(k+1)
+        if (std::abs(dx) < m_toll_incr)         // if the step is smaller then our toll_incr
+            break;
+    }
+    std::cout<< "Finished Newton Solver loop with estimate at:\t"<< m_x <<"\tWith "<< m_iter << " iterations."<<std::endl;
+} */
 
 
 /////////////////////////////////// QUASINEWTON /////////////////////////////////
 
-
-
-QuasiNewtonSolver::QuasiNewtonSolver(
-    const T::FunctionType &f,
-    const T::VariableType &x0,
-    const T::VariableType &xf,
-    const unsigned int max_it,
-    double h,
-    double toll_incr
-    ) :
-        BaseSolver(f,x0, xf, max_it),
-        m_h(h),
-        m_toll_incr(toll_incr),
-        m_res(m_toll_res +1),
-        m_df_x(0),          // dfdx evaluated in the current result
-        m_dx(0){};            // current increment
-        
-
-
-
-
 void QuasiNewtonSolver::solve()  {
     std::cout<< "Solving Quasinewton"<<std::endl;
+    m_x = m_x0;
+    T::ReturnType df_x = (m_f(m_x+m_h)-m_f(m_x-m_h))/(2*m_h);  // approx of the derivative
+    T::VariableType dx = m_res / df_x;                         // space step
+
+
     for (unsigned int m_iter = 0; m_iter < m_max_it; ++m_iter){
-        m_x = (m_x0 + m_xf) / 2;
-        m_res = m_f(m_x);       // function evaluated in the current point
-        std::cout<< m_x<< "----------" << m_res <<std::endl;
+    std::cout<<"\tWith "<< m_iter << " iterations."<<std::endl;  
+        m_res = m_f(m_x);                                      // function evaluated in the current point
         if (std::abs(m_res) < m_toll_res)
             break;
-        m_df_x = (m_f(m_x+m_h)-m_f(m_x-m_h))/(2*m_h);  // approx of the derivative
-        m_dx = m_res / m_df_x;
-        m_x -= m_dx;                // m_dx = m_x(k) - m_x(k+1)
-        if (std::abs(m_dx) < m_toll_incr)       // if the step is smaller then our toll_incr
+        df_x = (m_f(m_x+m_h)-m_f(m_x-m_h))/(2*m_h);  
+        dx = m_res / df_x;
+        m_x -= dx;                // m_dx = m_x(k) - m_x(k+1)
+        if (std::abs(dx) < m_toll_incr)       // if the step is smaller then our toll_incr
             break;
     }
 
-    // std::cout<< "Max iterations done"<<std::endl;
-    
-
+    std::cout<< "Finished QuasiNewton Solver loop with estimate at:\t"<< m_x <<"\tWith "<< m_iter << " iterations."<<std::endl;  
 }
+
 
 
 /////////////////////////////////// BISECTION /////////////////////////////////
 
 
-BisectionSolver::BisectionSolver(
-    const T::FunctionType &f,
-    const T::VariableType &x0,
-    const T::VariableType &xf,
-    const unsigned int max_it) :
-        BaseSolver(f,x0,xf,max_it) {};
+//BisectionSolver::BisectionSolver();
 
-void BisectionSolver::solve() {
+/* void BisectionSolver::solve() {
     std::cout<< "Solving Bisection"<<std::endl;
     T::ReturnType fa = m_f(m_x0), fb = m_f(m_xf);
     T::VariableType a = m_x0, b = m_xf;
@@ -92,20 +91,15 @@ void BisectionSolver::solve() {
         std::cout << "f has the same sign on the boundary points.\n It's not possible to apply the bisectione method" << std::endl;
 
     // std::cout<< "Max iterations done"<<std::endl;
-}
+} */
 
 
 /////////////////////////////////// SECANT /////////////////////////////////
 
-SecantSolver::SecantSolver(
-    const T::FunctionType &f,
-    const T::VariableType &x0,
-    const T::VariableType &xf,
-    const unsigned int max_it) :
-        BaseSolver(f,x0,xf,max_it) {};
+//SecantSolver::SecantSolver();
 
 
-void SecantSolver::solve() {
+/* void SecantSolver::solve() {
     std::cout<< "Solving Secant"<<std::endl;
     T::VariableType x0 = m_x0, x1 = m_xf;
     for (unsigned int m_iter = 0; m_iter < m_max_it; ++m_iter){
@@ -119,4 +113,4 @@ void SecantSolver::solve() {
         x0 = x1;
         x1 = m_x;        
     }
-}
+} */

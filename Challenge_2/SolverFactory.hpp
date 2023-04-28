@@ -6,36 +6,53 @@
 #include <memory>
 
 
-enum class SolverType : unsigned int
+enum class SolverType
 {
-  NewtonSolver = 0,
-  QuasiNewtonSolver = 1,
-  BisectionSolver = 2,
-  SecantSolver = 3
+  Newton_solver,
+  QuasiNewton_solver,
+  Bisection_solver,
+  Secant_solver,
+  Base_solver
 };
 
-
-template <class SolClass,SolverType SolType, class... Args>
-std::unique_ptr<SolClass>
-make_solver(Args &&... args)
+inline
+std::unique_ptr<BaseSolver>
+make_solver_simple(SolverType s)
 {
-  // static_assert(SolType == SolverType::NewtonSolver ||
-  //                 SolType == SolverType::QuasiNewtonSolver ||
-  //                 SolType == BaseSolver,
-  //               "Error in SolverType: Solver not yet implemented");
+  switch(s)
+    {
+    case SolverType::Newton_solver:{
+        std::cout<<"Made pointer to newtonsolver!!!"<<std::endl;
+      return std::make_unique<NewtonSolver>();}
+    case SolverType::QuasiNewton_solver:
+      return std::make_unique<QuasiNewtonSolver>();
+    case SolverType::Bisection_solver:
+      return std::make_unique<BisectionSolver>();
+    case SolverType::Secant_solver:
+      return std::make_unique<SecantSolver>();
+    default:
+      return nullptr;
+    }
+} 
 
-  if constexpr (SolType == SolverType::NewtonSolver)
-    return std::make_unique<NewtonSolver>(std::forward<Args>(args)...);
-  else if constexpr (SolType == SolverType::QuasiNewtonSolver)
-    return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);
-  else if constexpr (SolType == SolverType::BisectionSolver)
-    return std::make_unique<BisectionSolver>(std::forward<Args>(args)...);
-  else if constexpr (SolType == SolverType::SecantSolver)
-    return std::make_unique<SecantSolver>(std::forward<Args>(args)...);
-  else 
-    return std::make_unique<BaseSolver>(nullptr);
 
-    // return std::make_unique<SolClass>(std::forward<Args>(args)...);
+template <class... Args>
+std::unique_ptr<BaseSolver>
+make_solver(SolverType s, Args &&... args)
+{
+  switch(s)
+    {
+    /* case SolverType::Newton_solver:
+      return std::make_unique<NewtonSolver>(std::forward<Args>(args)...); */
+    case SolverType::QuasiNewton_solver:
+      return std::make_unique<QuasiNewtonSolver>(std::forward<Args>(args)...);
+    /* case SolverType::Bisection_solver:
+      return std::make_unique<BisectionSolver>(std::forward<Args>(args)...);
+    case SolverType::Secant_solver:
+      return std::make_unique<SecantSolver>(std::forward<Args>(args)...); */
+    default:
+      return nullptr;
+    }
 }
 
 #endif /* SOLVERFACTORY_HPP */
