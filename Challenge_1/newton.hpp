@@ -12,9 +12,11 @@ public:
     NewtonSolver(
         const std::function<double(const double &)> &f,
         const std::function<double(const double &)> &df,
+        const double x0,
+        const double xf,
         double toll_res = std::numeric_limits<double>::epsilon()*1000,      // default value
         double toll_incr = std::numeric_limits<double>::epsilon()*1000,     // default value
-        unsigned int max_it = 1000
+        unsigned int max_it = 100
     )
     :   // initialization list, constructing the solver passing our parameters (d,df,tollres,tollincr,maxit)
     m_f(f),
@@ -22,8 +24,10 @@ public:
     m_toll_res(toll_res),
     m_toll_incr(toll_incr),
     m_max_it(max_it),
+    m_x0(x0),
+    m_xf(xf),
 
-    m_x(0),             // current guess for the result
+    m_x((x0+xf)/2),             // current guess for the result
     m_df_x(0),          // dfdx evaluated in the current result
     m_dx(0),            // current increment
     m_iter(0) {}        // start from it = 0
@@ -53,6 +57,8 @@ private:
     const double m_toll_res;
     const double m_toll_incr;
     const unsigned int m_max_it;
+    const double m_x0;
+    const double m_xf;
     // current values, members that change depending on the iteration:
     double m_x;     // current guess for the zero
     double m_df_x;  // current value of df/dx (x)

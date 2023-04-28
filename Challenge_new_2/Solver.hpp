@@ -55,7 +55,7 @@ class NewtonSolver final: public BaseSolver{
 
     NewtonSolver() = default;
 
-   /*  NewtonSolver(
+    NewtonSolver(
         const T::FunctionType &f_, 
         const T::VariableType &x0_, 
         const T::VariableType &xf_, 
@@ -64,9 +64,9 @@ class NewtonSolver final: public BaseSolver{
         const T::VariableType &h_ ):
             BaseSolver(f_,x0_,xf_,max_it),
             m_df(df_),
-            m_h(h_) {};  */
+            m_h(h_) {}; 
 
-    void solve() override {};
+    void solve() override ;
 
     //~NewtonSolver() = default;
 

@@ -6,7 +6,7 @@
 /// Class defining common types for homogeneity.
 class SolverTraits
 {
-public: //TODO: USEFUL VARIABLE TYPES
+public: 
   
   using ReturnType = double;
   using VariableType = double;

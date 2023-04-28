@@ -27,8 +27,8 @@ int main(){
 
     //auto NNsolver = make_solver_simple(SolverType::Newton_solver);
 
-    /* auto Nsolver = make_solver(SolverType::Newton_solver,f,x0,xf,max_it,df,h);
-    Nsolver->solve(); */
+    auto Nsolver = make_solver(SolverType::Newton_solver,f,x0,xf,max_it,df,h);
+    Nsolver->solve();
 
     auto QNsolver = make_solver(SolverType::QuasiNewton_solver,f,x0,xf,max_it,h);
     QNsolver->solve();

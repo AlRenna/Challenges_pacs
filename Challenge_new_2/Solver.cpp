@@ -18,7 +18,7 @@ using T = SolverTraits;
 /////////////////////////////////// NEWTON /////////////////////////////////////
 
 
-/* void NewtonSolver::solve() {
+void NewtonSolver::solve() {
     m_x = m_x0;                                 // first guess
     T::ReturnType df_x = m_df(m_x);             //  derivative at current timestep
     T::VariableType dx = m_res / df_x;          // space step
@@ -34,7 +34,7 @@ using T = SolverTraits;
             break;
     }
     std::cout<< "Finished Newton Solver loop with estimate at:\t"<< m_x <<"\tWith "<< m_iter << " iterations."<<std::endl;
-} */
+}
 
 
 /////////////////////////////////// QUASINEWTON /////////////////////////////////
