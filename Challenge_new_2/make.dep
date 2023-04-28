@@ -1,0 +1,2 @@
+Solver.o: Solver.cpp Solver.hpp SolverTraits.hpp
+main.o: main.cpp Solver.hpp SolverTraits.hpp SolverFactory.hpp
