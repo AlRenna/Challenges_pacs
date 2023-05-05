@@ -1,5 +1,5 @@
 CXX      ?= g++
-CXXFLAGS ?= -std=c++17
+CXXFLAGS ?= -std=c++20
 CPPFLAGS ?= -O3 -Wall -I. -I${mkEigenInc} -IExamples/include #-pedantic
 LDFLAGS ?= -LExamples/lib -Wl,-rpath=Examples/lib  #in order to use the previous newtonslover
 LDLIBS   ?= 
@@ -18,9 +18,9 @@ OBJS = $(SRCS:.cpp=.o)
 
 all: $(EXEC)
 
-$(EXEC): $(OBJS)
-	## $(CXX) $(CPPFLAGS) $(CXXFLAGS) -MM $${file} >> main; ## cool this alone could create both obj files and ececoutable 'main'
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS)  -o main 
+$(EXEC): $(OBJS) # $(CXX) $(CPPFLAGS) $(CXXFLAGS) -MM $${file} >> main;  cool this alone could create both obj files and ececoutable 'main'
+	
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(OBJS)  -o main 
 
 $(OBJS): %.o: %.cpp
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(SRCS)
